@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - PC Configuration Tool</title>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="wrapper">
+        @Html.Action("GetCategoryList", "Home")
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        @RenderBody()
+
+                        @if (Session["TotalAmount"] != null)
+                        {
+                            <div class="card" style="width: 18rem; text-align: center;">
+                                <div class="card-body">
+                                    <h5 class="card-title"><b>Your Total:  @Session["TotalAmount"]</b></h5>
+                                    <p class="card-text"></p>
+                                    <a href="@Url.Action("Index", "ComponentSummary")" class="btn btn-primary">View PC Configuration</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+
+    <footer>
+        <p>&copy; @DateTime.Now.Year - PC Configuration Tool</p>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<EF.ComponentData.Models.ComponentItem>
+
+@{
+    ViewBag.Title = "Components";
+}
+
+<h2>PC Component List - @ViewBag.CategoryName</h2>
+
+@if (Model.Any())
+{
+    if (TempData["SuccessMessage"] != null)
+    {
+        var message = (string)TempData["SuccessMessage"];
+        <div class="alert alert-success" role="alert">
+            <strong>@message</strong>            
+        </div>
+    }
+
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.HiddenFor(model => item.ID)
+                    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+
+                    <a href="@Url.Action("AddComponentSummaryItem", "ComponentSummary", new { id = item.ID, categoryCode = item.ComponentCategory.CategoryCode})" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                        Select
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        There are no items configured here - please check back later!
+    </div>
+}
+

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<EF.ComponentData.Models.UserComponentSummary>
+
+@{
+    ViewBag.Title = "Component Summary";
+}
+
+<h2>Component Summary</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Component Category</th>
+        <th>Component Selection</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComponentItem.ComponentCategory.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComponentItem.Name)
+            </td>
+            <td align="center">
+                @Html.DisplayFor(modelItem => item.ComponentItem.Price)
+            </td>
+            <td>
+                <a href="@Url.Action("RemoveComponentSummaryItem", "ComponentSummary", new { id = item.ID, price = item.ComponentItem.Price })" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                    Remove
+                </a>
+            </td>
+        </tr>
+    }
+
+    <tr style="font-weight: bold">
+        <td colspan="2" align="center">Total:</td>
+        <td align="center">
+            @Model.Sum(c => c.ComponentItem.Price).ToString("c")
+        </td>
+    </tr>
+</table>
+
+@section Scripts
+{
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.btn-danger').click(function () {
+            return confirm("Are you sure you want to remove this item from the PC configuration?");
+        });
+    });
+</script>
+}   

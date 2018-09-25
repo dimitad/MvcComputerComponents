@@ -1,0 +1,17 @@
+﻿@model IList<EF.ComponentData.Models.ComponentCategory>
+
+<!-- Sidebar -->
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+            @Html.ActionLink("PC Configuration Tool", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </li>
+        @foreach (var category in Model)
+        {
+            <li>
+                @Html.ActionLink(category.Name, "ListComponents", "Home", new { categoryCode = category.CategoryCode }, null)
+            </li>
+        }
+    </ul>
+</div>
+<!-- /#sidebar-wrapper -->
